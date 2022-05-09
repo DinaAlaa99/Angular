@@ -1,1 +1,77 @@
-<p>department works!</p>
+<div class="row mt-5 mx-auto" style="width:80%">
+  <div class="col-3">
+    <div><label for="">ID</label></div>
+    <input class="mt-1" type="text" [(ngModel)]="ndept.id" />
+  </div>
+  <div class="col-3">
+    <div>
+      <label for="">Name</label>
+    </div>
+    <input class="mt-1" type="text" [(ngModel)]="ndept.name" />
+  </div>
+  <div class="col-3">
+    <div>
+      <label for="">Location</label>
+    </div>
+    <input class="mt-1" type="text" [(ngModel)]="ndept.location" />
+  </div>
+    <div class="col-3 mt-4">
+    <button class="btn btn-primary" (click)="AddDept()">Add Department</button>
+  </div>
+</div>
+<div class="row mx-auto">
+
+</div>
+<div class="row mt-5 mx-auto" style="width: 50%">
+  <div class="col-4">
+    <h6>
+      Id:
+      <span>{{ dept.id }}</span>
+    </h6>
+  </div>
+  <div class="col-4">
+    <h6>
+      Name:
+      <span>{{ dept.name }}</span>
+    </h6>
+  </div>
+  <div class="col-4">
+    <h6>
+      Location:
+      <span>{{ dept.location }}</span>
+    </h6>
+  </div>
+</div>
+<div class="row  mt-2 mx-auto" style="width:80%">
+<table class="table table-bordered table-stripped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of depts; let ser = index">
+      <td>{{ ser + 1 }}</td>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.location }}</td>
+      <td>
+        <button class="btn btn-info" (click)="ShowDept(item.id)">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+        </button>
+         <button class="btn btn-danger" (click)="DeleteDept(item.id)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!--<div style="background-color: brown" *ngIf="dept.capacity > 30; else t4">
+  {{ dept.name }}
+</div>
+<ng-template #t4> capacity of dept less than 30 </ng-template>-->
