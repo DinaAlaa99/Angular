@@ -1,0 +1,16 @@
+<p>student works!</p>
+<h1>
+    {{stdName  }}
+</h1>
+
+<!--<img [alt]="stdName" [src]="stdImg">-->
+<div [innerText]="stdName"></div>
+
+
+
+<button (click)="myfunc(st1.value)">
+    show
+</button>
+<input [(ngModel)]="stdName" type="text">
+<input #st1 type="text" (blur)="updateName(st1.value)"(keyup.enter)="updateName(st1.value)" >
+<input type="text" [value]="stdName" #st2 (keyup)="stdName=st2.value">
