@@ -1,16 +1,158 @@
-<p>student works!</p>
-<h1>
-    {{stdName  }}
-</h1>
+<div class="row mt-5 mx-auto" style="padding-left: 140px;">
+  <div class="col-2">
+    <div><label for="">ID</label></div>
+    <input class="mt-1" type="text" [(ngModel)]="nstd.id" />
+  </div>
+  <div class="col-2">
+    <div>
+      <label for="">Name</label>
+    </div>
+    <input class="mt-1" type="text" [(ngModel)]="nstd.name" />
+  </div>
+  <div class="col-2">
+    <div>
+      <label>Age</label>
+    </div>
+    <input class="mt-1" type="text" [(ngModel)]="nstd.age" />
+  </div>
+  <div class="col-2">
+    <div>
+      <label>Depatment No.</label>
+    </div>
+    <input class="mt-1" type="text" [(ngModel)]="nstd.deptno" />
+  </div>
+  <div class="col-3 mt-4">
+    <button class="btn btn-primary" (click)="add()">Add</button>
+  </div>
+</div>
+<div class="row mt-5 mx-auto" style="padding-left: 140px;" *ngIf="this.editFlag">
+  <div class="col-2">
+    <div><label for="">ID</label></div>
+    <input
+      #id
+      class="mt-1"
+      type="number"
+      [(ngModel)]="std.id"
+      [value]="this.std.id"
+    />
+  </div>
+  <div class="col-2">
+    <div>
+      <label for="">Name</label>
+    </div>
+    <input
+      #name
+      class="mt-1"
+      type="text"
+      [(ngModel)]="std.name"
+      [value]="this.std.name"
+    />
+  </div>
+  <div class="col-2">
+    <div>
+      <label>Age</label>
+    </div>
+    <input
+      #age
+      class="mt-1"
+      type="text"
+      [(ngModel)]="std.age"
+      [value]="this.std.age"
+    />
+  </div>
+    <div class="col-2">
+    <div>
+      <label>Department No.</label>
+    </div>
+    <input
+      #deptno
+      class="mt-1"
+      type="text"
+      [(ngModel)]="std.deptno"
+      [value]="this.std.deptno"
+    />
+  </div>
 
-<!--<img [alt]="stdName" [src]="stdImg">-->
-<div [innerText]="stdName"></div>
+  <div class="col-3 mt-4">
+    <button
+      class="btn btn-success"
+      (click)="update(id.value, name.value, age.value,deptno.value)"
+    >
+      Save
+    </button>
+  </div>
+</div>
 
-
-
-<button (click)="myfunc(st1.value)">
-    show
-</button>
-<input [(ngModel)]="stdName" type="text">
-<input #st1 type="text" (blur)="updateName(st1.value)"(keyup.enter)="updateName(st1.value)" >
-<input type="text" [value]="stdName" #st2 (keyup)="stdName=st2.value">
+<div class="row mx-auto"></div>
+<div class="row mt-5 mx-auto" style="width: 50%">
+  <div class="col-3">
+    <h6>
+      Id:
+      <span>{{ std.id }}</span>
+    </h6>
+  </div>
+  <div class="col-3">
+    <h6>
+      Name:
+      <span>{{ std.name }}</span>
+    </h6>
+  </div>
+  <div class="col-3">
+    <h6>
+      Age:
+      <span>{{ std.age }}</span>
+    </h6>
+  </div>
+    <div class="col-3">
+    <h6>
+      Department No.:
+      <span>{{ std.deptno }}</span>
+    </h6>
+  </div>
+</div>
+<div class="row mt-2 mx-auto" style="width: 80%">
+  <table class="table table-bordered table-stripped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+         <th scope="col">Department No.</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of stds; let ser = index">
+        <td>{{ ser + 1 }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.age }}</td>
+        <td>{{ item.deptno }}</td>
+        <td>
+          <ul class="list-inline m-0">
+            <li class="list-inline-item">
+              <button class="btn btn-primary" (click)="show(item.id)">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+            </li>
+            <li class="list-inline-item">
+              <button class="btn btn-success" (click)="edit(item.id)">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
+            </li>
+            <li class="list-inline-item">
+              <button class="btn btn-danger" (click)="destroy(item.id)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!--<div style="background-color: brown" *ngIf="dept.capacity > 30; else t4">
+  {{ dept.name }}
+</div>
+<ng-template #t4> capacity of dept less than 30 </ng-template>-->

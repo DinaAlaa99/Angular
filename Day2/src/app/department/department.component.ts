@@ -7,20 +7,20 @@ import { Department } from '../Models/department';
   styleUrls: ['./department.component.css'],
 })
 export class DepartmentComponent implements OnInit {
-  dept: Department = new Department(1, 'os', '');
+  dept: Department = new Department(0, '', '');
   ndept: Department = new Department(0, '', '');
   editFlag: boolean = false;
   index: number = -1;
   
   constructor() {}
-  AddDept() {
+  add() {
     this.depts.push(
       new Department(this.ndept.id, this.ndept.name, this.ndept.location)
     );
     this.dept = new Department(0, '', '');
   }
 
-  ShowDept(id: number) {
+  show(id: number) {
     this.editFlag = false;
     for (let i = 0; i < this.depts.length; i++) {
       if (this.depts[i].id == id) {
@@ -29,7 +29,7 @@ export class DepartmentComponent implements OnInit {
       }
     }
   }
-  EditDept(id: number) {
+  edit(id: number) {
     for (let i = 0; i < this.depts.length; i++) {
       if (this.depts[i].id == id) {
         this.dept = this.depts[i];
@@ -40,13 +40,13 @@ export class DepartmentComponent implements OnInit {
     this.editFlag = true;
 
   }
-  UpdateDept(id: any, name: string, location: string) {
+  update(id: any, name: string, location: string) {
     this.editFlag = false;
     this.depts[this.index].id = id;
     this.depts[this.index].name = name;
     this.depts[this.index].location = location;
   }
-  DeleteDept(id: number) {
+  destroy(id: number) {
     this.editFlag = false;
     for (let i = 0; i < this.depts.length; i++) {
       if (this.depts[i].id == id) {

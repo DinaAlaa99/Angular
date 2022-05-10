@@ -21,7 +21,7 @@
     </select>
   </div>
   <div class="col-3 mt-4">
-    <button class="btn btn-primary" (click)="AddDept()">Add</button>
+    <button class="btn btn-primary" (click)="add()">Add</button>
   </div>
 </div>
 <div class="row mt-5 mx-auto" style="width: 80%" *ngIf="this.editFlag">
@@ -68,7 +68,7 @@
   <div class="col-3 mt-4">
     <button
       class="btn btn-success" 
-      (click)="UpdateDept(id.value, name.value, location.value)"
+      (click)="update(id.value, name.value, location.value)"
     >
       Save
     </button>
@@ -116,17 +116,17 @@
         <td>
           <ul class="list-inline m-0">
             <li class="list-inline-item">
-              <button class="btn btn-primary" (click)="ShowDept(item.id)">
+              <button class="btn btn-primary" (click)="show(item.id)">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
             </li>
               <li class="list-inline-item">
-              <button class="btn btn-success" (click)="EditDept(item.id);">
+              <button class="btn btn-success" (click)="edit(item.id);">
                 <i class="fa fa-edit" aria-hidden="true"></i>
               </button>
             </li>
             <li class="list-inline-item">
-              <button class="btn btn-danger" (click)="DeleteDept(item.id)">
+              <button class="btn btn-danger" (click)="destroy(item.id)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </li>
