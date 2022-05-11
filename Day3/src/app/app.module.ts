@@ -6,7 +6,7 @@ import { StringConvertPipe } from './pipes/string-convert.pipe';
 import { ArraySplicePipe } from './pipes/array-splice.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
-
+import { ProductModule } from './product/product.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { SharedModule } from './shared/shared.module';
     StringConvertPipe,
     ArraySplicePipe,
   ],
-  imports: [BrowserModule, BrowserAnimationsModule,SharedModule],
+  imports: [BrowserModule, BrowserAnimationsModule,SharedModule,ProductModule],
   providers: [],
   bootstrap: [AppComponent],
 })
