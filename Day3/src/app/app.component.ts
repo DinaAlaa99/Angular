@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Day3';
+  x = 2;
+  y = 4;
+  input = "Dina-Alaa";
+  names=[
+    "Dina",
+    "Salma",
+    "Rana",
+    "Rowan",
+    "Reham"
+  ]
 }
