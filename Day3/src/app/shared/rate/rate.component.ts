@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-rate',
@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rate.component.css'],
 })
 export class RateComponent implements OnInit {
-  val: number=0;
+  @Output() newItemEvent = new EventEmitter<string>();
+  @Input() rate: number = 0;
+  @Input() readonly: any;
 
+  rating() {
+    this.newItemEvent.emit(String(this.rate));
+  }
   constructor() {}
 
   ngOnInit(): void {}

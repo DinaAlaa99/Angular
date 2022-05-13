@@ -1,40 +1,348 @@
-<div class="container mt-5" style="width: 80%;">
-<div class="card">
-  <div class="card-header">Product list</div>
-  <div class="card-body">
-    <div class="row mt-2">
-      <div class="col-6">
-        Filter By:
-        <input type="text" />
+<div class="mt-5 mx-auto" style="width: 90%">
+  <div class="card">
+    <div class="card-header">Product list</div>
+    <div class="card-body">
+      <div class="row mt-2">
+        <div class="col-6">
+          Filter By:
+          <input type="text" />
+        </div>
       </div>
-    </div>
-    <div class="row mt-4">
-    <table class="table table-bordered table-stripped">
-        <thead>
-          <tr>
-            <th scope="col">
-              <div class="text-center">
-              <button class="mx-auto btn btn-primary ">Show Image</button>
-
-              </div>
+      <div class="row mt-2">
+        <div class="col-12 text-center">
+          <button class="btn btn-primary" (click)="openAddFormModal()">
+            Add Product
+          </button>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <table class="table table-bordered table-stripped">
+          <thead>
+            <tr>
+              <th scope="col">
+                <div class="text-center">
+                  <button
+                    class="mx-auto btn btn-primary"
+                    (click)="showImages()"
+                  >
+                    Show Image
+                  </button>
+                </div>
               </th>
-            <th scope="col">Product</th>
-            <th scope="col">Code</th>
-            <th scope="col">Available</th>
-            <th scope="col">Price</th>
-            <th scope="col">5 star rating</th>
-          </tr>
-        </thead>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-    </table>
+              <th scope="col">Product</th>
+              <th scope="col">Code</th>
+              <th scope="col">Available</th>
+              <th scope="col">Price</th>
+              <th scope="col">5 Star Rating</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of products">
+              <td>
+                <div *ngIf="this.imgFlag">
+                  <div class="text-center">
+                    <img
+                      src="../../../assets/images/{{ item.img }}"
+                      style="max-width: 40%; max-height: 40%"
+                    />
+                  </div>
+                </div>
+              </td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.code | stringConvert }}</td>
+              <td>{{ item.available | date: "longDate" }}</td>
+              <td>{{ item.price | currency: "USD" }}</td>
+              <td>
+                <app-rate [rate]="item.rate" [readonly]="readonly"></app-rate>
+              </td>
+
+              <td>
+                <ul class="list-inline">
+                  <div class="row">
+                    <li class="list-inline-item col-3">
+                      <button class="btn btn-primary" (click)="show(item.id)">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                      </button>
+                    </li>
+                    <li class="list-inline-item col-3">
+                      <button class="btn btn-success" (click)="edit(item.id)">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                    </li>
+                    <li class="list-inline-item col-3">
+                      <button class="btn btn-danger" (click)="destroy(item.id)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </li>
+                  </div>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
+<!--Add Form modal-->
+<div class="modal fade" id="myAddModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="mt-2 mb-4 ps-2">
+        <div class="col-2">
+          <div><label for="">ID</label></div>
+          <input
+            class="mt-1 mb-1"
+            type="text"
+            [(ngModel)]="nproduct.id"
+            placeholder="id.."
+            value=""
+          />
+        </div>
+        <div class="col-2">
+          <div>
+            <label for="">Image</label>
+          </div>
+          <input class="mt-1 mb-1" type="file" [(ngModel)]="nproduct.img" />
+        </div>
+        <div class="col-2">
+          <div>
+            <label for="">Name</label>
+          </div>
+          <input class="mt-1 mb-1" type="text" [(ngModel)]="nproduct.name" />
+        </div>
+        <div class="col-2">
+          <div>
+            <label>Code</label>
+          </div>
+          <input
+            class="mt-1 mb-1"
+            type="text"
+            [(ngModel)]="nproduct.code"
+            placeholder="ang-121"
+          />
+        </div>
+        <div class="col-12">
+          <div>
+            <label>Available</label>
+          </div>
+          <app-calendar [(ngModel)]="nproduct.available"></app-calendar>
+        </div>
+        <div class="col-2">
+          <div>
+            <label>Price</label>
+          </div>
+          <p-inputNumber
+            [(ngModel)]="nproduct.price"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+          ></p-inputNumber>
+        </div>
+        <div class="col-12">
+          <div>
+            <label>Rate</label>
+          </div>
+          <app-rate (newItemEvent)="rating($event)"></app-rate>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="add()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Form modal-->
+<div class="modal fade" id="myEditModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">Edit Product</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="mt-12 mb-2 ps-2">
+        <div class="col-12">
+          <div class="text-center">
+            <img
+              src="../../../assets/images/{{ this.product.img }}"
+              style="max-width: 40%; max-height: 40%"
+            />
+          </div>
+        </div>
+        <div class="col-2">
+          <div><label for="">ID</label></div>
+          <input
+            #id
+            class="mt-1 mb-1"
+            type="text"
+            [(ngModel)]="product.id"
+            [value]="this.product.id"
+          />
+        </div>
+
+        <div class="col-2">
+          <div>
+            <label for="">Name</label>
+          </div>
+          <input
+            #name
+            class="mt-1 mb-1"
+            type="text"
+            [(ngModel)]="product.name"
+            [value]="this.product.name"
+          />
+        </div>
+        <div class="col-2">
+          <div>
+            <label>Code</label>
+          </div>
+          <input
+            #code
+            class="mt-1 mb-1"
+            type="text"
+            [(ngModel)]="product.code"
+            placeholder="ang-121"
+            [value]="this.product.code"
+          />
+        </div>
+        <div class="col-12">
+          <div>
+            <label>Available</label>
+          </div>
+          <app-calendar
+            #date
+            [(ngModel)]="product.available"
+            [value]="this.product.available"
+          ></app-calendar>
+        </div>
+        <div class="col-2">
+          <div>
+            <label>Price</label>
+          </div>
+          <p-inputNumber
+            #price
+            [(ngModel)]="product.price"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+          ></p-inputNumber>
+        </div>
+        <div class="col-12">
+          <div>
+            <label>Rate</label>
+          </div>
+          <app-rate
+            #rate
+            (newItemEvent)="rating($event)"
+            [rate]="this.product.rate"
+          ></app-rate>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="update(id, name, code, date, price, rate)"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--show modal-->
+<div class="modal fade" id="showModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">Edit Product</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="row mx-auto"></div>
+      <div class="ms-2" >
+        <div class="mt-1">
+         
+            <div class="text-center">
+              <img
+                src="../../../assets/images/{{ product.img }}"
+                style="max-width: 50%; max-height: 50%"
+              />
+            </div>
+          <h6>
+            Name:
+          </h6>
+                      <span>{{ product.name }}</span>
+
+        </div>
+        <div class="mt-1">
+          <h6>
+            Code:
+          </h6>
+                      <span>{{ product.code | stringConvert }}</span>
+
+        </div>
+        <div class="mt1">
+          <h6>
+            Available:
+          </h6>
+                      <span>{{ product.available | date: "longDate" }}</span>
+
+        </div>
+        <div class="mt-1">
+          <h6>
+            Price:
+          </h6>
+                      <span>{{ product.price | currency: "USD" }}</span>
+
+        </div>
+        <div class="mt-1">
+          <h6>
+            Rate:
+            <app-rate [rate]="product.rate" [readonly]="readonly"></app-rate>
+          </h6>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="update(id, name, code, date, price, rate)"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
