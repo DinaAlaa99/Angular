@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
-  declarations: [ProductComponent, StringConvertPipe],
+  declarations: [ProductComponent, StringConvertPipe, ArraySplicePipe],
   imports: [CommonModule, SharedModule, FormsModule, InputNumberModule],
   exports: [ProductComponent],
 })

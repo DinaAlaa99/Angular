@@ -5,7 +5,7 @@
       <div class="row mt-2">
         <div class="col-6">
           Filter By:
-          <input type="text" />
+          <input type="text" [(ngModel)]="filter" />
         </div>
       </div>
       <div class="row mt-2">
@@ -38,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of products">
+            <tr *ngFor="let item of products | arraySplice:filter">
               <td>
                 <div *ngIf="this.imgFlag">
                   <div class="text-center">
@@ -53,7 +53,7 @@
               <td>{{ item.code | stringConvert }}</td>
               <td>{{ item.available | date: "longDate" }}</td>
               <td>{{ item.price | currency: "USD" }}</td>
-              <td>
+             <td>
                 <app-rate [rate]="item.rate" [readonly]="readonly"></app-rate>
               </td>
 
@@ -266,7 +266,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          (click)="update(id, name, code, date, price, rate)"
+          (click)="update(id.value, name.value, code.value, date.value, price.value, rate)"
         >
           Save changes
         </button>
@@ -279,7 +279,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="">Edit Product</h5>
+        <h5 class="modal-title" id="">{{product.name}}</h5>
         <button
           type="button"
           class="btn-close"
@@ -297,35 +297,32 @@
                 style="max-width: 50%; max-height: 50%"
               />
             </div>
-          <h6>
-            Name:
-          </h6>
-                      <span>{{ product.name }}</span>
+          
 
         </div>
         <div class="mt-1">
-          <h6>
+          <h6 class="mb-1">
             Code:
           </h6>
                       <span>{{ product.code | stringConvert }}</span>
 
         </div>
-        <div class="mt1">
-          <h6>
+        <div class="mt-1">
+          <h6 class="mb-1">
             Available:
           </h6>
                       <span>{{ product.available | date: "longDate" }}</span>
 
         </div>
         <div class="mt-1">
-          <h6>
+          <h6 class="mb-1">
             Price:
           </h6>
                       <span>{{ product.price | currency: "USD" }}</span>
 
         </div>
         <div class="mt-1">
-          <h6>
+          <h6 class="mb-1">
             Rate:
             <app-rate [rate]="product.rate" [readonly]="readonly"></app-rate>
           </h6>
@@ -335,13 +332,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="update(id, name, code, date, price, rate)"
-        >
-          Save changes
-        </button>
+     
       </div>
     </div>
   </div>

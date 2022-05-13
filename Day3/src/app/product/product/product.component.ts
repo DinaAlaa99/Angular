@@ -17,6 +17,7 @@ export class ProductComponent implements OnInit {
   addFormModal: any;
   editFormModal: any;
   showModal: any;
+  filter: string='';
   constructor() {}
 
   add() {
@@ -66,7 +67,7 @@ export class ProductComponent implements OnInit {
     this.products[this.index].code = code;
     this.products[this.index].available = date;
     this.products[this.index].price = price;
-    this.products[this.index].rate = rate;
+    this.products[this.index].rate = this.nproduct.rate;
   }
   destroy(id: number) {
     for (let i = 0; i < this.products.length; i++) {
